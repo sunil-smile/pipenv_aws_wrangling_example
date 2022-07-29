@@ -1,0 +1,20 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+hdbcli = "==2.12.25"
+pandas = "==1.2.0"
+awswrangler = "==2.14.0"
+pyyaml = "*"
+
+[dev-packages]
+black = "==22.3.0"
+sphinx = "==5.0.0"
+flake8 = "==4.0.1"
+pydocstyle = "==6.1.1"
+mypy = "==0.960"
+
+[requires]
+python_version = "3.6"

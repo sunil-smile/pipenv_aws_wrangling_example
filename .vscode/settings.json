@@ -1,0 +1,19 @@
+{
+    "python.formatting.provider": "black",
+    "python.formatting.blackArgs": [
+        "--line-length",
+        "100"
+    ],
+    "python.formatting.blackPath": "black",
+    "python.linting.enabled": true,
+    "editor.formatOnSave": true,
+    "python.linting.flake8Enabled": true,
+    "python.linting.flake8Args": [
+        //"--ignore=C0114,C0115,C0116",
+        "--line_length>=100"
+    ],
+    "python.linting.mypyEnabled": true,
+    "autoDocstring.docstringFormat": "sphinx",
+    "autoDocstring.generateDocstringOnEnter": true,
+    "autoDocstring.customTemplatePath": ".mustache"
+}

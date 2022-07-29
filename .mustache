@@ -1,0 +1,25 @@
+This function {{summaryPlaceholder}}
+
+{{#argsExist}}
+{{/argsExist}}
+Arguments:
+    {{#args}}
+        {{var}} :{{typePlaceholder}}
+            description = {{descriptionPlaceholder}}
+    {{/args}}
+
+{{#kwargsExist}}
+{{/kwargsExist}}
+Optional Arguments:
+    {{#kwargs}}
+        {{var}}:{{typePlaceholder}}
+            default value={{&default}}
+            description = {{descriptionPlaceholder}}
+    {{/kwargs}}
+
+{{#returnsExist}}
+{{/returnsExist}}
+Returns:
+    {{#returns}}
+        {{typePlaceholder}}         -{{descriptionPlaceholder}}
+    {{/returns}}
