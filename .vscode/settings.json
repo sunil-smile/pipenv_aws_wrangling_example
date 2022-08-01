@@ -1,18 +1,22 @@
 {
+    //Code formatter using black , to work make sure black install in the python interpretor
     "python.formatting.provider": "black",
     "python.formatting.blackArgs": [
         "--line-length",
         "100"
     ],
     "python.formatting.blackPath": "black",
-    "python.linting.enabled": true,
     "editor.formatOnSave": true,
+    // Linting-flake8 validate the code quality  ,flake8 shoule be installed in the python interpretor
+    "python.linting.enabled": true,
     "python.linting.flake8Enabled": true,
     "python.linting.flake8Args": [
         //"--ignore=C0114,C0115,C0116",
         "--line_length>=100"
     ],
+    // Lininting-mypy validate the data types of the variables and functions,mypy shoule be installed in the python interpretor
     "python.linting.mypyEnabled": true,
+    // autoDocstring  - VS code marketplace plugin to generate auto function documents
     "autoDocstring.docstringFormat": "sphinx",
     "autoDocstring.generateDocstringOnEnter": true,
     "autoDocstring.customTemplatePath": ".mustache"

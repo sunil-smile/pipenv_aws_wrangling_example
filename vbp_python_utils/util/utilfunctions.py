@@ -78,4 +78,4 @@ class UtilFunctions:
             )
             print(f"Database {database_name} created")
         else:
-            print(f"Database {database_name} already exists".format(database_name))
+            print(f"Database {database_name} already exists")
