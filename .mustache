@@ -4,7 +4,7 @@ This function {{summaryPlaceholder}}
 {{/argsExist}}
 Arguments:
     {{#args}}
-        {{var}} :{{typePlaceholder}}
+        {{var}} : {{typePlaceholder}}
             description = {{descriptionPlaceholder}}
     {{/args}}
 
@@ -12,7 +12,7 @@ Arguments:
 {{/kwargsExist}}
 Optional Arguments:
     {{#kwargs}}
-        {{var}}:{{typePlaceholder}}
+        {{var}} : {{typePlaceholder}}
             default value={{&default}}
             description = {{descriptionPlaceholder}}
     {{/kwargs}}
@@ -21,5 +21,5 @@ Optional Arguments:
 {{/returnsExist}}
 Returns:
     {{#returns}}
-        {{typePlaceholder}}         -{{descriptionPlaceholder}}
+        {{typePlaceholder}}         = {{descriptionPlaceholder}}
     {{/returns}}

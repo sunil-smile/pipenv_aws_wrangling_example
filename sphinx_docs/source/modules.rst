@@ -1,11 +1,11 @@
 Utilities function
 ===================
 
-.. automodule:: vbp_python_utils.util.utilfunctions
+.. automodule:: src.utils.utilfunctions
    :members:
 
 Main function
 ===================
 
-.. automodule:: vbp_python_utils.main
+.. automodule:: src.main
    :members:

@@ -6,7 +6,12 @@
         "100"
     ],
     "python.formatting.blackPath": "black",
+    "editor.formatOnSaveMode": "file",
     "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        //organize and order the imports
+        "source.organizeImports": true
+    },
     // Linting-flake8 validate the code quality  ,flake8 shoule be installed in the python interpretor
     "python.linting.enabled": true,
     "python.linting.flake8Enabled": true,
@@ -16,8 +21,22 @@
     ],
     // Lininting-mypy validate the data types of the variables and functions,mypy shoule be installed in the python interpretor
     "python.linting.mypyEnabled": true,
+    "python.linting.mypyArgs": [
+        "--follow-imports=silent",
+        "--ignore-missing-imports",
+        "--show-column-numbers",
+        //This parameters throw errow when a function is defined without any type hinting for params and return types
+        //https://mypy.readthedocs.io/en/latest/command_line.html#untyped-definitions-and-calls
+        "--disallow-untyped-defs",
+        "--disallow-incomplete-defs"
+    ],
+    //"python.analysis.typeCheckingMode": "basic",
     // autoDocstring  - VS code marketplace plugin to generate auto function documents
     "autoDocstring.docstringFormat": "sphinx",
     "autoDocstring.generateDocstringOnEnter": true,
-    "autoDocstring.customTemplatePath": ".mustache"
+    "autoDocstring.customTemplatePath": ".mustache",
+    //To change the title bar color of the VS code
+    "workbench.colorCustomizations": {
+        "titleBar.activeBackground": "#418331"
+    }
 }
