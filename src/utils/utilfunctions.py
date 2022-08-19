@@ -16,14 +16,23 @@ class UtilFunctions:
     Utility Class function
     """
 
-    def __init__(self) -> None:
-        pass
+    # class variable
+    class_name: str
+
+    def __init__(self, func_name: str) -> None:
+        # instance or object variable
+        self.func_name = func_name
+
+    # this method is to print the object specific value ,instead of hexadecimal values
+    def __repr__(self) -> str:
+        return f"the name of the function is {self.func_name}"
 
     # if we define @classmethod decorator is used to declare a method in the class as a class method that can be called using ClassName. MethodName() .
     # The class method can also be called using an object of the class.
     # UtilFunctions.create_athena_database_if_not_exists
+    # since its a class method , we can use cls var
     @classmethod
-    def read_s3_file(self, bucketname: str, objectname: str) -> io.BytesIO:
+    def read_s3_file(cls, bucketname: str, objectname: str) -> io.BytesIO:
         """This function to read the files in S3 bucket
 
         Arguments:
@@ -39,7 +48,11 @@ class UtilFunctions:
 
     @classmethod
     def write_s3_parq_file(
-        self, my_session: boto3.Session, bucketname: str, objectname: str, dataframe: pd.DataFrame
+        cls,
+        my_session: boto3.Session,
+        bucketname: str,
+        objectname: str,
+        dataframe: pd.DataFrame,
     ) -> None:
         """The function write the pandas dataframe as parquet file in S3
 
@@ -63,7 +76,7 @@ class UtilFunctions:
 
     @classmethod
     def create_athena_database_if_not_exists(
-        self, my_session: boto3.Session, database_name: str, dummy: str = "dummy"
+        cls, my_session: boto3.Session, database_name: str, dummy: str = "dummy"
     ) -> None:
         """This function _summary_
 
@@ -91,7 +104,7 @@ class UtilFunctions:
             print(f"Database {database_name} already exists")
 
     @classmethod
-    def createSparkSession(self, appName: str) -> SparkSession:
+    def create_spark_session(cls, app_name: str) -> SparkSession:
         """This function creates the spark session
 
         Arguments:
@@ -100,14 +113,14 @@ class UtilFunctions:
         Returns:
                 SparkSession         - returns the spark session
         """
-        print("calling function " + appName)
-        spark_session = SparkSession.builder.appName(appName).getOrCreate()
+        print("calling function " + app_name)
+        spark_session = SparkSession.builder.appName(app_name).getOrCreate()
         print("executing the function")
         return spark_session
 
     @classmethod
-    def createDFfromFile(
-        self, spark: SparkSession, path: str, file_type: str
+    def create_df_from_file(
+        cls, spark: SparkSession, path: str, file_type: str
     ) -> Optional[DataFrame]:
         """This function creates the spark dataframe based on the input file
 
@@ -123,26 +136,26 @@ class UtilFunctions:
                 Optional[DataFrame]         - it returns the spark dataframe if the file type is csv or parquet
         """
 
-        def dFfromParquet(spark: SparkSession, path: str) -> DataFrame:
+        def df_from_parquet(spark: SparkSession, path: str) -> DataFrame:
             if isinstance(spark, SparkSession) and isinstance(path, str):
                 df = spark.read.format("parquet").option("header", "true").load(path)
                 return df
 
-        def dFfromCSV(spark: SparkSession, path: str) -> DataFrame:
+        def df_from_csv(spark: SparkSession, path: str) -> DataFrame:
             if isinstance(spark, SparkSession) and isinstance(path, str):
                 df = spark.read.format("csv").option("header", "true").load(path)
                 return df
 
         return (
-            dFfromCSV(spark, path)
+            df_from_csv(spark, path)
             if file_type == "csv"
-            else dFfromParquet(spark, path)
+            else df_from_parquet(spark, path)
             if file_type == "parquet"
             else None
         )
 
     @classmethod
-    def to_uppercase(self, df: DataFrame, columns_to_transform: List[str]) -> DataFrame:
+    def _to_uppercase(cls, df: DataFrame, columns_to_transform: List[str]) -> DataFrame:
         """This function _summary_
 
         Arguments:
@@ -164,7 +177,15 @@ class UtilFunctions:
 
         return df
 
-    @classmethod
+    # private method example
+    def __test_private(self) -> None:
+        print("test private method")
+
+    # function encapsulation
+    # without _ in front => public (access from anywhere)
+    # one _ in front =>  protected (accessed from the package)
+    # two __ in front => private (access only from that class and inherited class)
+    # this same applies to variables as well
     def _pd_to_uppercase(self, df: pd.DataFrame, columns_to_transform: List[str]) -> pd.DataFrame:
         """Uppercase the columns provided in the dataframe
         Args:
@@ -173,9 +194,9 @@ class UtilFunctions:
         Returns:
             DataFrame: The transformed DataFrame
         """
-
+        self.__test_private()
         # Loop through columns to transform and convert to uppercase
         for column in columns_to_transform:
             if column in df.columns:
-                df[column] = df[column].astype(str).upper()
+                df[column] = df[column].str.upper()
         return df

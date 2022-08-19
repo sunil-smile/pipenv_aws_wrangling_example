@@ -22,6 +22,8 @@
     // Lininting-mypy validate the data types of the variables and functions,mypy shoule be installed in the python interpretor
     "python.linting.mypyEnabled": true,
     "python.linting.mypyArgs": [
+        //check only src code to do lint check , not the test package
+        "-p=src",
         "--follow-imports=silent",
         "--ignore-missing-imports",
         "--show-column-numbers",
