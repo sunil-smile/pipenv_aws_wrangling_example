@@ -46,21 +46,19 @@ def test_to_uppercase(spark_session: SparkSession):
 
 
 def test__pd_to_uppercase(util_functions_obj: UtilFunctions):
-    print(util_functions_obj)
-    dtypes = np.dtype([("stock", str), ("price", int), ("buyer", str)])
     input_df = pd.DataFrame(
         {
-            "stock": {0: "AA", 2: "CC"},
-            "price": {0: 200, 1: 600, 2: 750},
-            "buyer": {0: "sunil", 1: "VidhyA", 2: "MaHathi"},
+            "stock": pd.Series(data=["AA", "CC"], index=[0, 2], dtype="str"),
+            "price": pd.Series(data=[200, 600, 750], dtype="int"),
+            "buyer": pd.Series(data=["sunil", "VidhyA", "MaHathi"], dtype="str"),
         }
     )
 
     exp_out_df = pd.DataFrame(
         {
-            "stock": {0: "AA", 1: np.NAN, 2: "CC"},
-            "price": {0: 200, 1: 600, 2: 750},
-            "buyer": {0: "SUNIL", 1: "VIDHYA", 2: "MAHATHI"},
+            "stock": pd.Series(data=["AA", np.NAN, "CC"], dtype="str"),
+            "price": pd.Series(data=[200, 600, 750], dtype="int"),
+            "buyer": pd.Series(data=["SUNIL", "VIDHYA", "MAHATHI"], dtype="str"),
         }
     )
     exp_out_df.sort_index(inplace=True, ascending=True)
