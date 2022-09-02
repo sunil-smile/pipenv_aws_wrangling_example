@@ -40,5 +40,18 @@
     //To change the title bar color of the VS code
     "workbench.colorCustomizations": {
         "titleBar.activeBackground": "#418331"
-    }
+    },
+    // To access the src folder modules in the pythonpath
+    // for WSL- ubuntu
+    "terminal.integrated.env.linux": {
+        "PYTHONPATH": "${workspaceFolder}/src:${env:PYTHONPATH}"
+    },
+    // for MAC
+    // "terminal.integrated.env.osx": {
+    //     "PYTHONPATH": "${workspaceFolder}/src:${env:PYTHONPATH}"
+    // },
+    //For windiows
+    // "terminal.integrated.env.windows": {
+    //     "PYTHONPATH": "${workspaceFolder}/src;${env:PYTHONPATH}"
+    // },
 }
