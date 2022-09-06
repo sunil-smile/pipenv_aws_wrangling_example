@@ -10,6 +10,7 @@ awswrangler = "==2.14.0"
 pyyaml = "==6.0"
 rinohtype = "==0.5.4"
 pyspark = "==3.2.1"
+great-expectations = "==0.15.16"
 
 [dev-packages]
 black = "==22.3.0"  
