@@ -1,0 +1,28 @@
+{
+  "data_asset_type": null,
+  "expectation_suite_name": "manual_expectation",
+  "expectations": [
+    {
+      "expectation_type": "expect_column_to_exist",
+      "kwargs": {
+        "column_list": [
+          "VendorID",
+          "RatecodeID",
+          "tip_amount:",
+          "tolls_amount",
+          "total_amount"
+        ]
+      },
+      "meta": {
+        "notes": {
+          "content": "Expected columns are present in the dataset",
+          "format": "markdown"
+        }
+      }
+    }
+  ],
+  "ge_cloud_id": null,
+  "meta": {
+    "great_expectations_version": "0.15.16"
+  }
+}
