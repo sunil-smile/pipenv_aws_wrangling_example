@@ -2,7 +2,8 @@ from multiprocessing import context
 from typing import List
 from urllib import request
 
-from ruamel import yaml
+import pandas as pd
+import yaml
 
 import great_expectations as ge
 from great_expectations import rule_based_profiler
@@ -88,9 +89,17 @@ trip_datasource_config = {
 # test the datasource config
 context.test_yaml_config(yaml.dump(trip_datasource_config))
 # add source to the context
-context.add_datasource(**trip_datasource_config)
+# add_datasource only if it doesn't already exist in your Data Context
+try:
+    context.get_datasource(trip_datasource_config["name"])
+except ValueError:
+    context.add_datasource(**trip_datasource_config)
+else:
+    datasource_name = trip_datasource_config["name"]
+    print(f"The datasource {datasource_name} already exists in your Data Context!")
+
 ds = context.get_datasource(trip_datasource_name)
-# print(ds.config)
+print(ds.config)
 
 # Single vs Multibatches
 # single Batch of data
@@ -106,7 +115,7 @@ inferred_batch_request = BatchRequest(
     data_connector_query=data_connector_query_2021,
 )
 inferred_batch_validator = context.get_validator(batch_request=inferred_batch_request)
-print(inferred_batch_validator.active_batch_definition)
+print(inferred_batch_validator.active_batch_definition.get("data_asset_name"))
 print(inferred_batch_validator.head(5))
 
 data_connector_query_2022_01 = {"batch_filter_parameters": {"month": "2022-01"}}
@@ -124,7 +133,7 @@ print(configured_batch_validator.head(5))
 # Multiple Batch of data
 # ----------------------
 # Data Assistant to generate an Expectation Suite that is populated with Expectations for you
-# batch request with\without any conditions , allows to create muli batch.
+# batch request with\without any conditions , allows to create multi batch.
 # add conditions to return multi batches , for instance filter on year which returns 12 files
 multiple_batch_request = BatchRequest(
     datasource_name=trip_datasource_name,
@@ -187,9 +196,11 @@ print(manual_expectation_suite.expectations)
 # create a new Expectation Suite by profiling your data with the User Configurable Profiler
 from great_expectations.profile.user_configurable_profiler import UserConfigurableProfiler
 
+PROFILER_EXPECTATION = "profile_expectation"
 profiler_expectation_suite = context.create_expectation_suite(
-    expectation_suite_name="profile_expectation", overwrite_existing=True
+    expectation_suite_name=PROFILER_EXPECTATION, overwrite_existing=True
 )
+
 # Passing multi batch for creating profile
 # profiler = UserConfigurableProfiler(profile_dataset=multiple_batch_request)
 # customizing the profiler
@@ -226,7 +237,6 @@ profiler_expectation_suite = profiler.build_suite()
 # # written custom methods
 # print(inferred_batch_validator.get_expectation_suite(discard_failed_expectations=False))
 # print(inferred_batch_validator.get_expectation_suite())
-multiple_batch_validator.expectation_suite_name = "profile_expectation"
+
+multiple_batch_validator.expectation_suite_name = PROFILER_EXPECTATION
 multiple_batch_validator.save_expectation_suite(discard_failed_expectations=False)
-# build data docs
-context.build_data_docs()

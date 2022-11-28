@@ -22,41 +22,53 @@ datasources:
         class_name: RuntimeDataConnector
         module_name: great_expectations.datasource.data_connector
       yellowtrip_inferred_data_connector_name:
-        base_directory: /mnt/c/Users/sunilprasath.elangov/VS_Code_Repo/pipenv_aws_wrangling_example/test_dataset
         glob_directive: '*/*.parquet'
+        base_directory: /mnt/c/Users/sunilprasath.elangov/VS_Code_Repo/pipenv_aws_wrangling_example/test_dataset
+        class_name: InferredAssetFilesystemDataConnector
         default_regex:
           group_names:
             - data_asset_name
             - year
             - month
           pattern: (.*)/yellow_tripdata_(\d{4})-(\d{2})\.parquet
-        class_name: InferredAssetFilesystemDataConnector
         module_name: great_expectations.datasource.data_connector
       yellowtrip_configured_data_connector_name:
-        base_directory: /mnt/c/Users/sunilprasath.elangov/VS_Code_Repo/pipenv_aws_wrangling_example/test_dataset/
-        glob_directive: '*'
         assets:
           yellow_trip:
-            base_directory: yellow_trip/
             pattern: yellow_tripdata_(\d{4})-(\d{2})\.parquet
+            base_directory: yellow_trip/
+            class_name: Asset
             group_names:
               - year
               - month
-            class_name: Asset
             module_name: great_expectations.datasource.data_connector.asset
           green_trip:
-            base_directory: green_trip/
             pattern: green_tripdata_(.*)\.parquet
+            base_directory: green_trip/
+            class_name: Asset
             group_names:
               - month
-            class_name: Asset
             module_name: great_expectations.datasource.data_connector.asset
+        glob_directive: '*'
+        base_directory: /mnt/c/Users/sunilprasath.elangov/VS_Code_Repo/pipenv_aws_wrangling_example/test_dataset/
         class_name: ConfiguredAssetFilesystemDataConnector
         module_name: great_expectations.datasource.data_connector
+    class_name: Datasource
     execution_engine:
       class_name: SparkDFExecutionEngine
       module_name: great_expectations.execution_engine
+    module_name: great_expectations.datasource
+  runtime_test_datasource:
+    data_connectors:
+      spark_runtime_data_connector_name:
+        batch_identifiers:
+          - default_identifier_name
+        class_name: RuntimeDataConnector
+        module_name: great_expectations.datasource.data_connector
     class_name: Datasource
+    execution_engine:
+      class_name: PandasExecutionEngine
+      module_name: great_expectations.execution_engine
     module_name: great_expectations.datasource
 config_variables_file_path: uncommitted/config_variables.yml
 
